@@ -1,4 +1,4 @@
-import { AmbientLight, BoxBufferGeometry, Mesh, MeshStandardMaterial, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from "three"
+import { AmbientLight, AxesHelper, BoxBufferGeometry, GridHelper, Mesh, MeshStandardMaterial, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from "three"
 
 export class TEngine {
 
@@ -28,9 +28,13 @@ export class TEngine {
     
     const ambientLight: AmbientLight = new AmbientLight('rgb(255, 255, 255)', 1)
 
+    const axesHelper: AxesHelper = new AxesHelper(500)
+    const gridHelper: GridHelper = new GridHelper(500, 20, 'rgb(200, 200, 200)', 'rgb(100, 100, 100)')
+
     this.scene.add(box)
     this.scene.add(ambientLight)
-
+    this.scene.add(axesHelper)
+    this.scene.add(gridHelper)
     // this.renderer.setClearColor('rgb(255, 255, 255)')
     // this.renderer.clearColor()
     this.renderer.render(this.scene, this.camera)
