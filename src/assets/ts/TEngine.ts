@@ -1,4 +1,4 @@
-import { BoxBufferGeometry, Mesh, MeshStandardMaterial, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from "three"
+import { AmbientLight, BoxBufferGeometry, Mesh, MeshStandardMaterial, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from "three"
 
 export class TEngine {
 
@@ -23,13 +23,16 @@ export class TEngine {
 
     const box: Mesh = new Mesh(
       new BoxBufferGeometry(10, 10, 10),
-      new MeshStandardMaterial()
+      new MeshStandardMaterial({ color: 'rgb(255, 0, 0)'})
     )
+    
+    const ambientLight: AmbientLight = new AmbientLight('rgb(255, 255, 255)', 1)
 
     this.scene.add(box)
+    this.scene.add(ambientLight)
 
-    this.renderer.setClearColor('rgb(255, 255, 255)')
-    this.renderer.clearColor()
+    // this.renderer.setClearColor('rgb(255, 255, 255)')
+    // this.renderer.clearColor()
     this.renderer.render(this.scene, this.camera)
   }
 }
