@@ -37,6 +37,17 @@ export class TEngine {
     this.scene.add(gridHelper)
     // this.renderer.setClearColor('rgb(255, 255, 255)')
     // this.renderer.clearColor()
-    this.renderer.render(this.scene, this.camera)
+
+    
+
+    const renderFun = () => {
+      box.position.x += -0.01
+      box.rotation.y += 0.001
+      this.camera.position.x += -0.01
+      this.renderer.render(this.scene, this.camera)
+      requestAnimationFrame(renderFun)
+    }
+
+    renderFun()
   }
 }
