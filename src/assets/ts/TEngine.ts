@@ -9,7 +9,8 @@ import {
   Scene,
   Vector3,
   WebGLRenderer,
-  MOUSE } from "three"
+  MOUSE, 
+  Object3D} from "three"
 
   import Stats from 'three/examples/jsm/libs/stats.module'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
@@ -37,22 +38,16 @@ export class TEngine {
     
     this.renderer.setSize(dom.offsetWidth, dom.offsetHeight, true)
 
-    const box: Mesh = new Mesh(
-      new BoxBufferGeometry(10, 10, 10),
-      new MeshStandardMaterial({ color: 'rgb(255, 0, 0)'})
-    )
+    
     
     const ambientLight: AmbientLight = new AmbientLight('rgb(255, 255, 255)', 1)
 
     const axesHelper: AxesHelper = new AxesHelper(500)
     const gridHelper: GridHelper = new GridHelper(500, 20, 'rgb(200, 200, 200)', 'rgb(100, 100, 100)')
 
-    this.scene.add(box)
     this.scene.add(ambientLight)
     this.scene.add(axesHelper)
     this.scene.add(gridHelper)
-    // this.renderer.setClearColor('rgb(255, 255, 255)')
-    // this.renderer.clearColor()
     
 
     // 初始性能监视器
@@ -72,8 +67,6 @@ export class TEngine {
     }
 
     const renderFun = () => {
-      box.position.x += -0.01
-      box.rotation.y += 0.001
       orbitControls.update()
 
       this.renderer.render(this.scene, this.camera)
@@ -85,5 +78,11 @@ export class TEngine {
 
     dom.appendChild(this.renderer.domElement)
     dom.appendChild(statsDom)
+  }
+
+  addObject (...object: Object3D[]) {
+    object.forEach(elem => {
+      this.scene.add(elem)
+    })
   }
 }
