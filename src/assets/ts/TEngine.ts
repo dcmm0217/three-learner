@@ -1,4 +1,16 @@
-import { AmbientLight, AxesHelper, BoxBufferGeometry, GridHelper, Mesh, MeshStandardMaterial, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from "three"
+import { 
+  AmbientLight,
+  AxesHelper,
+  BoxBufferGeometry,
+  GridHelper,
+  Mesh,
+  MeshStandardMaterial,
+  PerspectiveCamera,
+  Scene,
+  Vector3,
+  WebGLRenderer } from "three"
+
+  import Stats from 'three/examples/jsm/libs/stats.module'
 
 export class TEngine {
 
@@ -18,7 +30,7 @@ export class TEngine {
     this.camera.lookAt(new Vector3(0, 0, 0))
     this.camera.up = new Vector3(0, 1, 0)
 
-    dom.appendChild(this.renderer.domElement)
+    
     this.renderer.setSize(dom.offsetWidth, dom.offsetHeight, true)
 
     const box: Mesh = new Mesh(
@@ -37,7 +49,15 @@ export class TEngine {
     this.scene.add(gridHelper)
     // this.renderer.setClearColor('rgb(255, 255, 255)')
     // this.renderer.clearColor()
+    
 
+    // 初始性能监视器
+    const stats = Stats()
+    const statsDom = stats.domElement
+    statsDom.style.position = 'fixed'
+    statsDom.style.top = '0'
+    statsDom.style.right = '5px'
+    statsDom.style.left = 'unset'
     
 
     const renderFun = () => {
@@ -45,9 +65,13 @@ export class TEngine {
       box.rotation.y += 0.001
       this.camera.position.x += -0.01
       this.renderer.render(this.scene, this.camera)
+      stats.update()
       requestAnimationFrame(renderFun)
     }
 
     renderFun()
+
+    dom.appendChild(this.renderer.domElement)
+    dom.appendChild(statsDom)
   }
 }
