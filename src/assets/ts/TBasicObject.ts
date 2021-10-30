@@ -4,21 +4,27 @@ import {
   MeshStandardMaterial,
   SphereBufferGeometry,
   CylinderBufferGeometry,
-  Object3D
+  Object3D,
+  Line,
+  Points,
+  PointsMaterial
 } from 'three'
 
 export const basicObjectList: Object3D[] = []
 
+const material = new MeshStandardMaterial({color: 'blue'})
+const geometry = new BoxBufferGeometry(10, 10, 10)
+
 export const box: Mesh = new Mesh(
-  new BoxBufferGeometry(10, 10, 10),
-  new MeshStandardMaterial({ color: 'rgb(255, 0, 0)'})
+  geometry,
+  material
 )
 
 box.position.x = -10
 
-export const sphere: Mesh = new Mesh(
-  new SphereBufferGeometry(5),
-  new MeshStandardMaterial()
+export const sphere: Line = new Line( // 网格物体
+  geometry, // 几何
+  material
 )
 
 sphere.position.x = 10
