@@ -28,6 +28,9 @@ export class TEngine {
     this.renderer = new WebGLRenderer({
       antialias: true
     })
+
+    this.renderer.shadowMap.enabled = true
+
     this.scene = new Scene()
     this.camera = new PerspectiveCamera(45, dom.offsetWidth / dom.offsetHeight, 1, 1000)
 

@@ -19,7 +19,8 @@ const stage: Mesh = new Mesh(
   new MeshStandardMaterial({color: 'rgb(0, 75, 75)'})
 )
 
-console.log((stage.material as MeshStandardMaterial).color)
+stage.castShadow = true
+stage.receiveShadow = true
 
 stage.position.y = -5
 
@@ -28,6 +29,9 @@ const box: Mesh = new Mesh(
   new BoxBufferGeometry(20, 20, 20),
   new MeshStandardMaterial({color: 'red'})
 )
+
+box.castShadow = true
+box.receiveShadow = true
 
 box.position.y = 10
 

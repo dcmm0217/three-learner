@@ -1,7 +1,8 @@
 import {
   AmbientLight,
   Object3D,
-  PointLight
+  PointLight,
+  SpotLight
 } from 'three'
 
 export const LightsList: Object3D[] = []
@@ -17,4 +18,19 @@ export const pointLight: PointLight = new PointLight(
 
 pointLight.position.set(20, 20, 20)
 
-LightsList.push(ambientLight, pointLight)
+export const spotLight: SpotLight = new SpotLight(
+  'rgb(255, 255, 255)',
+  1,
+  200,
+  Math.PI / 180 * 30,
+  0,
+  0
+)
+
+spotLight.castShadow = true
+
+spotLight.position.set(-50, 50, -50)
+
+
+
+LightsList.push(ambientLight, pointLight, spotLight)
