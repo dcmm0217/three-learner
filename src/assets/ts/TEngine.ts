@@ -37,14 +37,7 @@ export class TEngine {
 
     
     this.renderer.setSize(dom.offsetWidth, dom.offsetHeight, true)
-
-    const axesHelper: AxesHelper = new AxesHelper(500)
-    const gridHelper: GridHelper = new GridHelper(500, 20, 'rgb(200, 200, 200)', 'rgb(100, 100, 100)')
-
-    this.scene.add(axesHelper)
-    this.scene.add(gridHelper)
     
-
     // 初始性能监视器
     const stats = Stats()
     const statsDom = stats.domElement

@@ -8,10 +8,10 @@ export const LightsList: Object3D[] = []
 
 const ambientLight: AmbientLight = new AmbientLight('rgb(255, 255, 255)', 0.3)
 
-const pointLight: PointLight = new PointLight(
-  'rgb(255, 255, 255)',
+export const pointLight: PointLight = new PointLight(
+  'rgb(255, 0, 0)',
   0.7,
-  200,
+  50,
   0.1
 )
 
