@@ -38,14 +38,9 @@ export class TEngine {
     
     this.renderer.setSize(dom.offsetWidth, dom.offsetHeight, true)
 
-    
-    
-    const ambientLight: AmbientLight = new AmbientLight('rgb(255, 255, 255)', 1)
-
     const axesHelper: AxesHelper = new AxesHelper(500)
     const gridHelper: GridHelper = new GridHelper(500, 20, 'rgb(200, 200, 200)', 'rgb(100, 100, 100)')
 
-    this.scene.add(ambientLight)
     this.scene.add(axesHelper)
     this.scene.add(gridHelper)
     

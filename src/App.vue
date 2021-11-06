@@ -7,8 +7,7 @@ import { defineComponent, onMounted, ref } from 'vue'
 import { TEngine} from './assets/ts/TEngine'
 
 import { basicObjectList } from './assets/ts/TBasicObject'
-
-import { TCanvasTextureEditor } from './assets/ts/TCanvasTextureEditor'
+import { LightsList } from './assets/ts/Tlights'
 
 export default defineComponent({
   setup() {
@@ -17,26 +16,7 @@ export default defineComponent({
     onMounted(() => {
       const TE = new TEngine(threeTarget.value!)
       TE.addObject(...basicObjectList)
-
-      const testCanvas = new TCanvasTextureEditor()
-      testCanvas.draw(ctx => {
-        ctx.fillStyle = 'blue'
-
-        ctx.beginPath()
-        ctx.rect(10, 10, 200, 200) // 画一个矩形路径
-        // ctx.strokeStyle = 'red' // 设置笔的描边的颜色
-        // ctx.stroke() // 通知笔进行描边
-        ctx.fill()
-        ctx.closePath()
-      
-        ctx.translate(100, 100)
-        ctx.beginPath()
-        ctx.rect(10, 10, 200, 200) // 画一个矩形路径
-        ctx.fill()
-        ctx.closePath()
-
-
-      }).preview()
+      TE.addObject(...LightsList)
     })
 
     return {
