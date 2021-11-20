@@ -8,8 +8,10 @@ import {
   Line,
   Points,
   PointsMaterial,
-  Material
+  Material,
+  PlaneBufferGeometry
 } from 'three'
+import { pictureTexture } from './TTextures'
 
 export const basicObjectList: Object3D[] = []
 
@@ -42,4 +44,15 @@ box.receiveShadow = true
 
 box.position.y = 10
 
-basicObjectList.push(stage, box)
+// 相框
+const plane: Mesh = new Mesh(
+  new PlaneBufferGeometry(192, 108),
+  new MeshStandardMaterial({
+    map: pictureTexture
+  })
+)
+
+plane.position.y = 45
+plane.scale.set(0.3, 0.3, 0.3)
+
+basicObjectList.push(stage, box, plane)
