@@ -16,7 +16,10 @@ export const basicObjectList: Object3D[] = []
 // 地面
 const stage: Mesh = new Mesh(
   new BoxBufferGeometry(200, 10, 200),
-  new MeshStandardMaterial({color: 'rgb(0, 75, 75)'})
+  new MeshStandardMaterial({
+    color: 'rgb(0, 75, 75)',
+    roughness: 0
+  })
 )
 
 stage.castShadow = true
@@ -27,7 +30,11 @@ stage.position.y = -5
 // 立方体
 const box: Mesh = new Mesh(
   new BoxBufferGeometry(20, 20, 20),
-  new MeshStandardMaterial({color: 'red'})
+  new MeshStandardMaterial({
+    color: 'red',
+    metalness: 1,
+    roughness: 0.3
+  })
 )
 
 box.castShadow = true
