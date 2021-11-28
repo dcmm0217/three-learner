@@ -9,8 +9,12 @@ import {
   Points,
   PointsMaterial,
   Material,
-  PlaneBufferGeometry
+  PlaneBufferGeometry,
+  Color
 } from 'three'
+
+import {VertexNormalsHelper} from 'three/examples/jsm/helpers/VertexNormalsHelper'
+
 import { pictureTexture } from './TTextures'
 
 export const basicObjectList: Object3D[] = []
@@ -33,16 +37,21 @@ stage.position.y = -5
 const box: Mesh = new Mesh(
   new BoxBufferGeometry(20, 20, 20),
   new MeshStandardMaterial({
-    color: 'red',
-    metalness: 1,
-    roughness: 0.3
+    color: 'white',
+    // map: pictureTexture
   })
 )
+
+
 
 box.castShadow = true
 box.receiveShadow = true
 
 box.position.y = 10
+box.position.x = 25
+
+const boxNormalHelper = new VertexNormalsHelper(box, 10, new Color('blue').getHex())
+
 
 // 相框
 const plane: Mesh = new Mesh(
@@ -55,4 +64,4 @@ const plane: Mesh = new Mesh(
 plane.position.y = 45
 plane.scale.set(0.3, 0.3, 0.3)
 
-basicObjectList.push(stage, box, plane)
+basicObjectList.push(stage, box, plane, boxNormalHelper)

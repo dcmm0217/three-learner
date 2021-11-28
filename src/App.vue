@@ -9,6 +9,7 @@ import { TEngine} from './assets/ts/TEngine'
 import { basicObjectList } from './assets/ts/TBasicObject'
 import { LightsList } from './assets/ts/Tlights'
 import { helperList } from './assets/ts/THelper'
+import { codeModelList } from './assets/ts/TCodeModel'
 
 export default defineComponent({
   setup() {
@@ -19,6 +20,7 @@ export default defineComponent({
       TE.addObject(...basicObjectList)
       TE.addObject(...LightsList)
       TE.addObject(...helperList)
+      TE.addObject(...codeModelList)
     })
 
     return {
