@@ -10,7 +10,8 @@ import { basicObjectList } from './assets/ts/TBasicObject'
 import { LightsList } from './assets/ts/Tlights'
 import { helperList } from './assets/ts/THelper'
 import { codeModelList } from './assets/ts/TCodeModel'
-import { framePromise } from './assets/ts/TLoadModel'
+import { frameMaterail, framePromise } from './assets/ts/TLoadModel'
+import { Material, Mesh } from 'three'
 
 export default defineComponent({
   setup() {
@@ -24,6 +25,11 @@ export default defineComponent({
       TE.addObject(...codeModelList)
 
       framePromise.then(group => {
+
+        console.log(group)
+        const frameMesh: Mesh = group.children[0] as Mesh
+        (frameMesh.material as Material).dispose()
+        frameMesh.material = frameMaterail
         group.position.y = 45
         group.position.z = -1
         group.rotation.y = Math.PI / 180 * -90

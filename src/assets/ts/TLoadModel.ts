@@ -1,22 +1,14 @@
-import { Group, Mesh } from 'three'
+import { Group, Mesh, MeshStandardMaterial } from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
-import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
+import { frameColorTexture, frameDispTexture, frameRoughnessTexture } from './TTextures'
 
 const objLoader: OBJLoader = new OBJLoader()
-const mtlLoader: MTLLoader = new MTLLoader()
 
-export const framePromise = new Promise<Group>((resolve, reject) => {
-  mtlLoader.loadAsync('/frame.mtl').then(materialCreator => {
-    objLoader
-    .setMaterials(materialCreator)
-    .loadAsync('/frame.obj')
-    .then(group => {
-      resolve(group)
-    }).catch(err => {
-      reject(err)
-    })
-  }).catch(err => {
-    reject(err)
-  })
+export const framePromise = objLoader.loadAsync('/frame.obj')
+
+export const frameMaterail: MeshStandardMaterial = new MeshStandardMaterial({
+  map: frameColorTexture,
+  roughnessMap: frameRoughnessTexture,
+  bumpMap: frameDispTexture
 })
 
