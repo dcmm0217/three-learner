@@ -29,7 +29,7 @@ export const spotLight: SpotLight = new SpotLight(
 
 spotLight.castShadow = true
 
-spotLight.position.set(-50, 50, -50)
+spotLight.position.set(-70, 80, -70)
 
 
 
