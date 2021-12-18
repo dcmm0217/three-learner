@@ -6,7 +6,7 @@ const objLoader: OBJLoader = new OBJLoader()
 
 
 export const framePromise = new Promise<Mesh>((resolve, reject) => {
-  objLoader.loadAsync('/frme.obj').then(group => {
+  objLoader.loadAsync('/frame.obj').then(group => {
     const frame: Mesh = group.children[0] as Mesh
     (frame.material as Material).dispose()
 
@@ -16,8 +16,8 @@ export const framePromise = new Promise<Mesh>((resolve, reject) => {
       bumpMap: frameDispTexture
     })
 
-    frame.position.y = 45
-    frame.position.z = -1
+    frame.position.y = 120
+    frame.position.z = -70
     frame.rotation.y = Math.PI / 180 * -90
     frame.scale.set(2, 2, 2)
 

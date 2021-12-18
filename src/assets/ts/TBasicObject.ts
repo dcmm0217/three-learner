@@ -19,7 +19,7 @@ export const basicObjectList: Object3D[] = []
 
 // 地面
 const stage: Mesh = new Mesh(
-  new BoxBufferGeometry(200, 10, 200),
+  new BoxBufferGeometry(600, 10, 400),
   new MeshStandardMaterial({
     color: 'rgb(0, 75, 75)',
     roughness: 0
@@ -31,33 +31,30 @@ stage.receiveShadow = true
 
 stage.position.y = -5
 
-// 立方体
-const box: Mesh = new Mesh(
-  new BoxBufferGeometry(20, 20, 20),
-  new MeshStandardMaterial({
-    color: 'white',
-    map: pictureTexture
-  })
-)
 
-
-
-box.castShadow = true
-box.receiveShadow = true
-
-box.position.y = 10
-box.position.x = 25
-
-
-// 相框
-const plane: Mesh = new Mesh(
+// 图片
+const prcture: Mesh = new Mesh(
   new PlaneBufferGeometry(192, 108),
   new MeshStandardMaterial({
     map: pictureTexture
   })
 )
 
-plane.position.y = 45
-plane.scale.set(0.3, 0.3, 0.3)
+prcture.position.y = 120
+prcture.position.z = -70
+prcture.scale.set(0.3, 0.3, 0.3)
 
-basicObjectList.push(stage, box, plane)
+// 墙面
+export const wall: Mesh = new Mesh(
+  new BoxBufferGeometry(600, 200, 10),
+  new MeshStandardMaterial({
+    color: 'white'
+  })
+)
+wall.position.y = 100
+wall.position.z = -80
+
+wall.updateMatrix()
+wall.updateMatrixWorld()
+
+basicObjectList.push(stage, wall, prcture)

@@ -4,6 +4,7 @@ import {
   PointLight,
   SpotLight
 } from 'three'
+import { wall } from './TBasicObject'
 
 export const LightsList: Object3D[] = []
 
@@ -21,7 +22,7 @@ pointLight.position.set(20, 20, 20)
 export const spotLight: SpotLight = new SpotLight(
   'rgb(255, 255, 255)',
   1,
-  200,
+  500,
   Math.PI / 180 * 30,
   0,
   0
@@ -29,8 +30,8 @@ export const spotLight: SpotLight = new SpotLight(
 
 spotLight.castShadow = true
 
-spotLight.position.set(-70, 80, -70)
+spotLight.position.set(0, 100, 400)
 
+spotLight.target = wall
 
-
-LightsList.push(ambientLight, pointLight, spotLight)
+LightsList.push(ambientLight, spotLight)
