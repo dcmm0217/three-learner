@@ -25,7 +25,7 @@ const stage: Mesh = new Mesh(
     roughness: 0
   })
 )
-
+stage.raycast = () => {}
 stage.castShadow = true
 stage.receiveShadow = true
 

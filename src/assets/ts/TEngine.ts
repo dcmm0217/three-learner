@@ -98,7 +98,7 @@ export class TEngine {
         transing = false
         return false
       }
-
+      console.log('click')
       // 选取物体的操作
       raycaster.setFromCamera(mouse, this.camera)
 
