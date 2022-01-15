@@ -71,8 +71,29 @@ export class TEngine {
     transformControls.addEventListener('mouseDown', () => {
       transing = true
     })
-    
-    scene.add(transformControls)
+    document.addEventListener('keydown', (event) => {
+      if (event.repeat) {
+        return false
+      }
+
+      console.log(event)
+      if (event.key === 'e') {
+        transformControls.mode = 'scale'
+        return false
+      }
+
+      if (event.key === 'r') {
+        transformControls.mode = 'rotate'
+        return false
+      }
+
+      if (event.key === 't') {
+        transformControls.mode = 'translate'
+        return false
+      }
+    })
+
+  
     // 初始射线发射器
     const raycaster = new Raycaster()
 
@@ -98,7 +119,7 @@ export class TEngine {
         transing = false
         return false
       }
-      console.log('click')
+
       // 选取物体的操作
       raycaster.setFromCamera(mouse, this.camera)
 
