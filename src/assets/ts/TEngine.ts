@@ -67,6 +67,11 @@ export class TEngine {
 
     // 初始变换控制器
     const transformControls = new TransformControls(this.camera, renderer.domElement)
+    let transing = false
+    transformControls.addEventListener('mouseDown', () => {
+      transing = true
+    })
+    
     scene.add(transformControls)
     // 初始射线发射器
     const raycaster = new Raycaster()
@@ -87,6 +92,15 @@ export class TEngine {
     })
 
     renderer.domElement.addEventListener('click', event => {
+     
+      // 拖动结束的操作
+      if (transing) {
+        transing = false
+        return false
+      }
+
+      console.log('click')
+      // 选取物体的操作
       raycaster.setFromCamera(mouse, this.camera)
 
       const intersection = raycaster.intersectObjects(scene.children)
@@ -115,6 +129,7 @@ export class TEngine {
     this.scene = scene
     this.transformControls = transformControls
     this.mouse = mouse
+    this.raycaster = raycaster
   }
 
   addObject (...object: Object3D[]) {
