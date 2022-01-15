@@ -99,14 +99,15 @@ export class TEngine {
         return false
       }
 
-      console.log('click')
       // 选取物体的操作
       raycaster.setFromCamera(mouse, this.camera)
 
+      scene.remove(transformControls)
       const intersection = raycaster.intersectObjects(scene.children)
 
       if (intersection.length) {
        const object = intersection[0].object
+       scene.add(transformControls)
        transformControls.attach(object)
       }
     })
