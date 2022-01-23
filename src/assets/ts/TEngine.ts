@@ -76,6 +76,24 @@ export class TEngine {
       transing = true
     })
 
+    document.addEventListener('keyup', (event) => {
+      console.log(event)
+      if (event.key === 'e') {
+        transformControls.mode = "scale"
+        return false
+      }
+
+      if (event.key === 'r') {
+        transformControls.mode = "rotate"
+        return false
+      }
+
+      if (event.key === 't') {
+        transformControls.mode = "translate"
+        return false
+      }
+    })
+
     // 初始射线发射器
     const raycaster = new Raycaster()
 
