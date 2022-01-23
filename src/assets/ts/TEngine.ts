@@ -104,7 +104,8 @@ export class TEngine {
       raycaster.setFromCamera(mouse, this.camera)
 
       scene.remove(transformControls)
-      const intersection = raycaster.intersectObjects(scene.children)
+      const intersection = raycaster.intersectObjects(scene.children, false)
+      console.log(intersection)
       scene.add(transformControls)
       if (intersection.length) {
        const object = intersection[0].object
