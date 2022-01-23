@@ -95,7 +95,7 @@ export class TEngine {
     })
 
     renderer.domElement.addEventListener('click', event => {
-      
+
       if (transing) {
         transing = false
         return false
@@ -103,8 +103,9 @@ export class TEngine {
       console.log('click')
       raycaster.setFromCamera(mouse, this.camera)
 
+      scene.remove(transformControls)
       const intersection = raycaster.intersectObjects(scene.children)
-
+      scene.add(transformControls)
       if (intersection.length) {
        const object = intersection[0].object
        transformControls.attach(object)
