@@ -57,4 +57,12 @@ wall.position.z = -80
 wall.updateMatrix()
 wall.updateMatrixWorld()
 
+wall.addEventListener('mouseenter', () => {
+  (wall.material as MeshStandardMaterial).color = new Color('red')
+})
+
+wall.addEventListener('mouseleave', () => {
+  (wall.material as MeshStandardMaterial).color = new Color('white')
+})
+
 basicObjectList.push(stage, wall, prcture)

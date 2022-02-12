@@ -103,6 +103,9 @@ export class TEngine {
     let y = 0
     let width = 0
     let height = 0
+
+    let cacheObject: Object3D | null = null
+
     renderer.domElement.addEventListener('mousemove', (event) => {
       x = event.offsetX
       y = event.offsetY
@@ -110,6 +113,41 @@ export class TEngine {
       height = renderer.domElement.offsetHeight
       mouse.x = x / width * 2 - 1
       mouse.y = -y * 2 / height + 1
+
+      // 选取物体的操作
+      raycaster.setFromCamera(mouse, this.camera)
+
+      scene.remove(transformControls)
+      const intersection = raycaster.intersectObjects(scene.children)
+      scene.add(transformControls)
+
+      if (intersection.length) {
+        const object = intersection[0].object
+
+        if (object !== cacheObject) {
+          if (cacheObject) {
+            cacheObject.dispatchEvent({
+              type: 'mouseleave'
+            })
+          }
+          object.dispatchEvent({
+            type: 'mouseenter'
+          })
+        } else if (object === cacheObject) {
+          object.dispatchEvent({
+            type: 'mousemove'
+          })
+        }
+        cacheObject = object
+
+      } else {
+        if (cacheObject) {
+          cacheObject.dispatchEvent({
+            type: 'mouseleave'
+          })
+        }
+        cacheObject = null
+      }
     })
 
     renderer.domElement.addEventListener('click', event => {
