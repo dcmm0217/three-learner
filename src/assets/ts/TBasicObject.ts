@@ -56,4 +56,8 @@ wall.position.z = -80;
 wall.updateMatrix();
 wall.updateMatrixWorld();
 
+wall.addEventListener("click", () => {
+  console.log("wall click");
+});
+
 basicObjectList.push(stage, wall, prcture);
