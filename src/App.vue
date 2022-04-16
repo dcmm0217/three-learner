@@ -3,36 +3,37 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
-import { TEngine} from './assets/ts/TEngine'
+import { defineComponent, onMounted, ref } from "vue";
+import { TEngine } from "./assets/ts/TEngine";
 
-import { basicObjectList } from './assets/ts/TBasicObject'
-import { LightsList } from './assets/ts/Tlights'
-import { helperList } from './assets/ts/THelper'
-import { codeModelList } from './assets/ts/TCodeModel'
-import { framePromise } from './assets/ts/TLoadModel'
+import { basicObjectList } from "./assets/ts/TBasicObject";
+import { LightsList } from "./assets/ts/Tlights";
+import { helperList } from "./assets/ts/THelper";
+import { codeModelList } from "./assets/ts/TCodeModel";
+// import { framePromise } from './assets/ts/TLoadModel'
+import { groupPromise } from "./assets/ts/TGroup";
 
 export default defineComponent({
   setup() {
-    const threeTarget = ref(null)
+    const threeTarget = ref(null);
 
     onMounted(() => {
-      const TE = new TEngine(threeTarget.value!)
-      TE.addObject(...basicObjectList)
-      TE.addObject(...LightsList)
-      TE.addObject(...helperList)
-      TE.addObject(...codeModelList)
+      const TE = new TEngine(threeTarget.value!);
+      TE.addObject(...basicObjectList);
+      TE.addObject(...LightsList);
+      TE.addObject(...helperList);
+      TE.addObject(...codeModelList);
 
-      framePromise.then(frame => {
-        TE.addObject(frame)
-      })
-    })
+      groupPromise.then((group) => {
+        TE.addObject(group);
+      });
+    });
 
     return {
-      threeTarget
-    }
+      threeTarget,
+    };
   },
-})
+});
 </script>
 
 <style>

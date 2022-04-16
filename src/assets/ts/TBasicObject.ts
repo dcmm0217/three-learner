@@ -31,18 +31,6 @@ stage.receiveShadow = true;
 
 stage.position.y = -5;
 
-// 图片
-const prcture: Mesh = new Mesh(
-  new PlaneBufferGeometry(192, 108),
-  new MeshStandardMaterial({
-    map: pictureTexture,
-  })
-);
-
-prcture.position.y = 120;
-prcture.position.z = -70;
-prcture.scale.set(0.3, 0.3, 0.3);
-
 // 墙面
 export const wall: Mesh = new Mesh(
   new BoxBufferGeometry(600, 200, 10),
@@ -60,4 +48,4 @@ wall.addEventListener("click", () => {
   console.log("wall click");
 });
 
-basicObjectList.push(stage, wall, prcture);
+basicObjectList.push(stage, wall);

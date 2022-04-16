@@ -14,6 +14,7 @@ import {
   Vector2,
   Raycaster,
   Material,
+  Group,
 } from "three";
 
 import Stats from "three/examples/jsm/libs/stats.module";
@@ -147,13 +148,15 @@ export class TEngine {
       // 选取物体的操作
 
       if (event.intersection.length) {
-        const object = event.intersection[0].object;
+        const object = event.intersection[0].object as Object3D;
         if (object.type === "TransformControlsPlane") {
           transformControls.detach();
           scene.remove(transformControls);
         } else {
           scene.add(transformControls);
-          transformControls.attach(object);
+          transformControls.attach(
+            object.parent instanceof Group ? object.parent : object
+          );
         }
       } else {
         transformControls.detach();
