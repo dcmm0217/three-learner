@@ -1,4 +1,4 @@
-import { 
+import {
   AmbientLight,
   AxesHelper,
   BoxBufferGeometry,
@@ -9,192 +9,177 @@ import {
   Scene,
   Vector3,
   WebGLRenderer,
-  MOUSE, 
+  MOUSE,
   Object3D,
   Vector2,
-  Raycaster} from "three"
+  Raycaster,
+  Material,
+} from "three";
 
-  import Stats from 'three/examples/jsm/libs/stats.module'
-  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-  import { TransformControls } from 'three/examples/jsm/controls/TransformControls'
+import Stats from "three/examples/jsm/libs/stats.module";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { TransformControls } from "three/examples/jsm/controls/TransformControls";
+import { TEventManager } from "./TEventManager";
 
 export class TEngine {
+  private dom: HTMLElement;
+  private renderer: WebGLRenderer;
+  private transformControls: TransformControls;
 
-  private dom: HTMLElement
-  private renderer: WebGLRenderer
-  private transformControls: TransformControls
+  private eventManager: TEventManager;
 
-  private raycaster: Raycaster
+  private scene: Scene;
+  private camera: PerspectiveCamera;
 
-  private mouse: Vector2
-
-  private scene: Scene
-  private camera: PerspectiveCamera
-
-  constructor (dom: HTMLElement) {
-    this.dom = dom
+  constructor(dom: HTMLElement) {
+    this.dom = dom;
     const renderer = new WebGLRenderer({
-      antialias: true
-    })
+      antialias: true,
+    });
 
-    renderer.shadowMap.enabled = true
+    renderer.shadowMap.enabled = true;
 
-    const scene = new Scene()
-    this.camera = new PerspectiveCamera(45, dom.offsetWidth / dom.offsetHeight, 1, 1000)
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(
+      45,
+      dom.offsetWidth / dom.offsetHeight,
+      1,
+      1000
+    );
 
-    this.camera.position.set(200, 200 ,200)
-    this.camera.lookAt(new Vector3(0, 0, 0))
-    this.camera.up = new Vector3(0, 1, 0)
+    camera.position.set(200, 200, 200);
+    camera.lookAt(new Vector3(0, 0, 0));
+    camera.up = new Vector3(0, 1, 0);
 
-    
-    renderer.setSize(dom.offsetWidth, dom.offsetHeight, true)
-    
+    renderer.setSize(dom.offsetWidth, dom.offsetHeight, true);
+
     // 初始性能监视器
-    const stats = Stats()
-    const statsDom = stats.domElement
-    statsDom.style.position = 'fixed'
-    statsDom.style.top = '0'
-    statsDom.style.right = '5px'
-    statsDom.style.left = 'unset'
+    const stats = Stats();
+    const statsDom = stats.domElement;
+    statsDom.style.position = "fixed";
+    statsDom.style.top = "0";
+    statsDom.style.right = "5px";
+    statsDom.style.left = "unset";
 
     // 初始orbitControls
-    const orbitControls: OrbitControls = new OrbitControls(this.camera, renderer.domElement)
+    const orbitControls: OrbitControls = new OrbitControls(
+      camera,
+      renderer.domElement
+    );
     orbitControls.mouseButtons = {
       LEFT: null as unknown as MOUSE,
       MIDDLE: MOUSE.DOLLY,
-      RIGHT: MOUSE.ROTATE
-    }
+      RIGHT: MOUSE.ROTATE,
+    };
 
     // 初始变换控制器
-    const transformControls = new TransformControls(this.camera, renderer.domElement)
-    let transing = false
-    transformControls.addEventListener('mouseDown', () => {
-      transing = true
-    })
-    document.addEventListener('keydown', (event) => {
+    const transformControls = new TransformControls(
+      camera,
+      renderer.domElement
+    );
+    let transing = false;
+    transformControls.addEventListener("mouseDown", () => {
+      transing = true;
+    });
+    document.addEventListener("keydown", (event) => {
       if (event.repeat) {
-        return false
+        return false;
       }
 
-      console.log(event)
-      if (event.key === 'e') {
-        transformControls.mode = 'scale'
-        return false
+      console.log(event);
+      if (event.key === "e") {
+        transformControls.mode = "scale";
+        return false;
       }
 
-      if (event.key === 'r') {
-        transformControls.mode = 'rotate'
-        return false
+      if (event.key === "r") {
+        transformControls.mode = "rotate";
+        return false;
       }
 
-      if (event.key === 't') {
-        transformControls.mode = 'translate'
-        return false
+      if (event.key === "t") {
+        transformControls.mode = "translate";
+        return false;
       }
-    })
+    });
 
-  
-    // 初始射线发射器
-    const raycaster = new Raycaster()
+    const eventManager = new TEventManager({
+      dom: renderer.domElement,
+      scene: scene,
+      camera: camera,
+    });
 
-    // 给renderer的canvas对象添加鼠标事件
-    const mouse = new Vector2()
-    let x = 0
-    let y = 0
-    let width = 0
-    let height = 0
+    let cacheObject: Mesh | null = null;
+    eventManager.addEventListener("mousemove", (event) => {
+      if (event.intersection.length) {
+        const object = event.intersection[0].object;
 
-    let cacheObject: Object3D | null = null
-
-    renderer.domElement.addEventListener('mousemove', (event) => {
-      x = event.offsetX
-      y = event.offsetY
-      width = renderer.domElement.offsetWidth
-      height = renderer.domElement.offsetHeight
-      mouse.x = x / width * 2 - 1
-      mouse.y = -y * 2 / height + 1
-
-      // 选取物体的操作
-      raycaster.setFromCamera(mouse, this.camera)
-
-      scene.remove(transformControls)
-      const intersection = raycaster.intersectObjects(scene.children)
-      scene.add(transformControls)
-
-      if (intersection.length) {
-        const object = intersection[0].object
-
-        if (object !== cacheObject) {
-          if (cacheObject) {
-            cacheObject.dispatchEvent({
-              type: 'mouseleave'
-            })
-          }
-          object.dispatchEvent({
-            type: 'mouseenter'
-          })
-        } else if (object === cacheObject) {
-          object.dispatchEvent({
-            type: 'mousemove'
-          })
+        // 对比新老物体
+        if (object === cacheObject) {
+          return;
+        } else if (object !== cacheObject && cacheObject) {
+          (cacheObject.material as MeshStandardMaterial).color.multiplyScalar(
+            0.5
+          );
         }
-        cacheObject = object
 
+        if (object.material) {
+          object.material.color.multiplyScalar(2);
+          cacheObject = object;
+        }
       } else {
         if (cacheObject) {
-          cacheObject.dispatchEvent({
-            type: 'mouseleave'
-          })
+          (cacheObject.material as MeshStandardMaterial).color.multiplyScalar(
+            0.5
+          );
+          cacheObject = null;
         }
-        cacheObject = null
       }
-    })
+    });
 
-    renderer.domElement.addEventListener('click', event => {
-     
+    renderer.domElement.addEventListener("click", (event) => {
       // 拖动结束的操作
       if (transing) {
-        transing = false
-        return false
+        transing = false;
+        return false;
       }
 
-      // 选取物体的操作
-      raycaster.setFromCamera(mouse, this.camera)
+      // // 选取物体的操作
+      // raycaster.setFromCamera(mouse, this.camera)
 
-      scene.remove(transformControls)
-      const intersection = raycaster.intersectObjects(scene.children)
+      // scene.remove(transformControls)
+      // const intersection = raycaster.intersectObjects(scene.children)
 
-      if (intersection.length) {
-       const object = intersection[0].object
-       scene.add(transformControls)
-       transformControls.attach(object)
-      }
-    })
+      // if (intersection.length) {
+      //  const object = intersection[0].object
+      //  scene.add(transformControls)
+      //  transformControls.attach(object)
+      // }
+    });
 
     const renderFun = () => {
-      orbitControls.update()
+      orbitControls.update();
 
-      renderer.render(scene, this.camera)
-      stats.update()
-      requestAnimationFrame(renderFun)
-    }
+      renderer.render(scene, camera);
+      stats.update();
+      requestAnimationFrame(renderFun);
+    };
 
-    renderFun()
+    renderFun();
 
-    dom.appendChild(renderer.domElement)
-    dom.appendChild(statsDom)
+    dom.appendChild(renderer.domElement);
+    dom.appendChild(statsDom);
 
-
-    this.renderer = renderer
-    this.scene = scene
-    this.transformControls = transformControls
-    this.mouse = mouse
-    this.raycaster = raycaster
+    this.renderer = renderer;
+    this.scene = scene;
+    this.camera = camera;
+    this.transformControls = transformControls;
+    this.eventManager = eventManager;
   }
 
-  addObject (...object: Object3D[]) {
-    object.forEach(elem => {
-      this.scene.add(elem)
-    })
+  addObject(...object: Object3D[]) {
+    object.forEach((elem) => {
+      this.scene.add(elem);
+    });
   }
 }

@@ -10,59 +10,50 @@ import {
   PointsMaterial,
   Material,
   PlaneBufferGeometry,
-  Color
-} from 'three'
+  Color,
+} from "three";
 
-import { pictureTexture } from './TTextures'
+import { pictureTexture } from "./TTextures";
 
-export const basicObjectList: Object3D[] = []
+export const basicObjectList: Object3D[] = [];
 
 // 地面
 const stage: Mesh = new Mesh(
   new BoxBufferGeometry(600, 10, 400),
   new MeshStandardMaterial({
-    color: 'rgb(0, 75, 75)',
-    roughness: 0
+    color: "rgb(0, 75, 75)",
+    roughness: 0,
   })
-)
-stage.raycast = () => {}
-stage.castShadow = true
-stage.receiveShadow = true
+);
 
-stage.position.y = -5
+stage.castShadow = true;
+stage.receiveShadow = true;
 
+stage.position.y = -5;
 
 // 图片
 const prcture: Mesh = new Mesh(
   new PlaneBufferGeometry(192, 108),
   new MeshStandardMaterial({
-    map: pictureTexture
+    map: pictureTexture,
   })
-)
+);
 
-prcture.position.y = 120
-prcture.position.z = -70
-prcture.scale.set(0.3, 0.3, 0.3)
+prcture.position.y = 120;
+prcture.position.z = -70;
+prcture.scale.set(0.3, 0.3, 0.3);
 
 // 墙面
 export const wall: Mesh = new Mesh(
   new BoxBufferGeometry(600, 200, 10),
   new MeshStandardMaterial({
-    color: 'white'
+    color: "white",
   })
-)
-wall.position.y = 100
-wall.position.z = -80
+);
+wall.position.y = 100;
+wall.position.z = -80;
 
-wall.updateMatrix()
-wall.updateMatrixWorld()
+wall.updateMatrix();
+wall.updateMatrixWorld();
 
-wall.addEventListener('mouseenter', () => {
-  (wall.material as MeshStandardMaterial).color = new Color('red')
-})
-
-wall.addEventListener('mouseleave', () => {
-  (wall.material as MeshStandardMaterial).color = new Color('white')
-})
-
-basicObjectList.push(stage, wall, prcture)
+basicObjectList.push(stage, wall, prcture);
