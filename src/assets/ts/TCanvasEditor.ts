@@ -1,4 +1,4 @@
-export class TCanvasTextureEditor {
+export class TCanvasEditor {
 
   canvas: HTMLCanvasElement
 
