@@ -19,7 +19,7 @@ export const basicObjectList: Object3D[] = [];
 
 // 地面
 const stage: Mesh = new Mesh(
-  new BoxBufferGeometry(600, 10, 400),
+  new BoxBufferGeometry(1000, 10, 400),
   new MeshStandardMaterial({
     color: "rgb(0, 75, 75)",
     roughness: 0,
@@ -33,7 +33,7 @@ stage.position.y = -5;
 
 // 墙面
 export const wall: Mesh = new Mesh(
-  new BoxBufferGeometry(600, 200, 10),
+  new BoxBufferGeometry(1000, 200, 10),
   new MeshStandardMaterial({
     color: "white",
   })

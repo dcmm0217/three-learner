@@ -11,7 +11,7 @@ import { LightsList } from "./assets/ts/Tlights";
 import { helperList } from "./assets/ts/THelper";
 import { codeModelList } from "./assets/ts/TCodeModel";
 // import { framePromise } from './assets/ts/TLoadModel'
-import { groupPromise } from "./assets/ts/TGroup";
+import { groupPromise, groupListPromise } from "./assets/ts/TGroup";
 
 export default defineComponent({
   setup() {
@@ -24,8 +24,12 @@ export default defineComponent({
       TE.addObject(...helperList);
       TE.addObject(...codeModelList);
 
-      groupPromise.then((group) => {
-        TE.addObject(group);
+      // groupPromise.then((group) => {
+      //   TE.addObject(group);
+      // });
+
+      groupListPromise.then((groupList) => {
+        TE.addObject(...groupList);
       });
     });
 
