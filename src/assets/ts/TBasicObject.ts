@@ -13,8 +13,6 @@ import {
   Color,
 } from "three";
 
-import { pictureTexture } from "./TTextures";
-
 export const basicObjectList: Object3D[] = [];
 
 // 地面

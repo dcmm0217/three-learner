@@ -3,8 +3,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, reactive, ref } from "vue";
 import { TEngine } from "./assets/ts/TEngine";
+import { message } from "ant-design-vue";
+import { DefaultLoaderManager } from "./assets/ts/TLoaderManager";
 
 import { basicObjectList } from "./assets/ts/TBasicObject";
 import { LightsList } from "./assets/ts/Tlights";
@@ -12,6 +14,21 @@ import { helperList } from "./assets/ts/THelper";
 import { codeModelList } from "./assets/ts/TCodeModel";
 // import { framePromise } from './assets/ts/TLoadModel'
 import { groupPromise, groupListPromise } from "./assets/ts/TGroup";
+
+const key = "tips";
+const tipsBox = reactive(DefaultLoaderManager.tipsBox);
+DefaultLoaderManager.tipsBox = tipsBox;
+const tips = message.loading({
+  content: () =>
+    `正在加载资源：${Math.round(
+      ((tipsBox.success + tipsBox.error) / tipsBox.total) * 100
+    )}%`,
+  key,
+  duration: 0,
+});
+DefaultLoaderManager.addEventListener("loaded", () => {
+  tips();
+});
 
 export default defineComponent({
   setup() {

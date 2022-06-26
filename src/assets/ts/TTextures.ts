@@ -1,20 +1,6 @@
-import { CanvasTexture, Texture, TextureLoader } from "three";
+import { CanvasTexture, Texture } from "three";
 import { TCanvasEditor } from "./TCanvasEditor";
 import pirturesConfigure from "../json/pictures.json";
-
-const textureLoader: TextureLoader = new TextureLoader();
-
-export const pictureTexture: Texture = textureLoader.load("/1.jpg");
-
-export const frameColorTexture = textureLoader.load(
-  "/WoodFloor024_1K_Color.jpg"
-);
-export const frameRoughnessTexture = textureLoader.load(
-  "/WoodFloor024_1K_Roughness.jpg"
-);
-export const frameDispTexture = textureLoader.load(
-  "/WoodFloor024_1K_Displacement.jpg"
-);
 
 export const tipsTexture = new CanvasTexture(
   // .preview()
@@ -44,11 +30,9 @@ export const tipsTexture = new CanvasTexture(
   }).canvas
 );
 
-export const pricturesTextureList: Texture[] = [];
 export const tipsTextureList: CanvasTexture[] = [];
 
 pirturesConfigure.forEach((elem) => {
-  pricturesTextureList.push(textureLoader.load(elem.url));
   tipsTextureList.push(
     new CanvasTexture(
       // .preview()
