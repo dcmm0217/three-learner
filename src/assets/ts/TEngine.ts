@@ -15,12 +15,14 @@ import {
   Raycaster,
   Material,
   Group,
+  PointsMaterial,
 } from "three";
 
 import Stats from "three/examples/jsm/libs/stats.module";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { TransformControls } from "three/examples/jsm/controls/TransformControls";
 import { TEventManager } from "./TEventManager";
+import { pointsPartical } from "./TPoints";
 
 export class TEngine {
   private dom: HTMLElement;
@@ -164,11 +166,29 @@ export class TEngine {
       }
     });
 
+    let driection = 1;
+
     const renderFun = () => {
       orbitControls.update();
 
       renderer.render(scene, camera);
       stats.update();
+
+      pointsPartical.rotation.y += 0.01;
+      pointsPartical.rotation.x += 0.008;
+      pointsPartical.rotation.z += 0.012;
+
+      if ((<PointsMaterial>pointsPartical.material).opacity >= 1) {
+        driection = -1;
+      } else if ((<PointsMaterial>pointsPartical.material).opacity <= 0) {
+        driection = 1;
+      }
+      (<PointsMaterial>pointsPartical.material).opacity += 0.01 * driection;
+
+      pointsPartical.scale.x += 0.15 * driection;
+      pointsPartical.scale.y += 0.12 * driection;
+      pointsPartical.scale.z += 0.13 * driection;
+
       requestAnimationFrame(renderFun);
     };
 

@@ -14,6 +14,8 @@ import { helperList } from "./assets/ts/THelper";
 import { codeModelList } from "./assets/ts/TCodeModel";
 // import { framePromise } from './assets/ts/TLoadModel'
 import { groupPromise, groupListPromise } from "./assets/ts/TGroup";
+import { pointsPartical } from "./assets/ts/TPoints";
+import { testSprite } from "./assets/ts/TSprite";
 
 const key = "tips";
 const tipsBox = reactive(DefaultLoaderManager.tipsBox);
@@ -40,6 +42,8 @@ export default defineComponent({
       TE.addObject(...LightsList);
       TE.addObject(...helperList);
       TE.addObject(...codeModelList);
+      TE.addObject(pointsPartical);
+      // TE.addObject(testSprite);
 
       // groupPromise.then((group) => {
       //   TE.addObject(group);
